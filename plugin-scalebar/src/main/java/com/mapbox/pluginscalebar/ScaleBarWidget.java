@@ -120,9 +120,12 @@ public class ScaleBarWidget extends View {
    * @param metersPerPixel how many meters in each pixel.
    */
   void setDistancePerPixel(double metersPerPixel) {
-    this.distancePerPixel = isMetricUnit ? metersPerPixel : metersPerPixel * ScaleBarConstants.FEET_PER_METER;
-    if (!refreshHandler.hasMessages(MSG_WHAT)) {
-      refreshHandler.sendEmptyMessageDelayed(MSG_WHAT, refreshInterval);
+    double newDPP = isMetricUnit ? metersPerPixel : metersPerPixel * ScaleBarConstants.FEET_PER_METER;
+    if (newDPP != this.distancePerPixel) {
+      this.distancePerPixel = newDPP;
+      if (!refreshHandler.hasMessages(MSG_WHAT)) {
+        refreshHandler.sendEmptyMessageDelayed(MSG_WHAT, refreshInterval);
+      }
     }
   }
 
